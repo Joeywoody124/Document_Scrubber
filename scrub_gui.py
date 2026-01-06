@@ -3,12 +3,11 @@
 Document Scrubber GUI with Multiple Themes
 ===========================================
 A graphical interface for scrubbing personal and project-specific data
-from text documents. Features runtime GUI style switching using the
-GUI Design Center Library.
+from text documents. Features runtime GUI style switching with 8 built-in
+themes inspired by the GUI Design Center Library.
 
 Author: Generated with Claude Code
 Created: 2025-01-06
-Style Library: GUI_Design_Center_Library
 """
 
 import tkinter as tk
@@ -25,9 +24,150 @@ from scrub_document import DocumentScrubber, DEFAULT_PATTERNS
 
 
 # ============================================================================
-# STYLE CONFIGURATION
+# EMBEDDED THEME DEFINITIONS (No external files required)
 # ============================================================================
-STYLES_BASE_PATH = Path(r"E:\CLAUDE_Workspace\Claude\Report_Files\GUI_Design_Center_Library\styles")
+EMBEDDED_THEMES = {
+    "Twisty (Dark)": {
+        "name": "Twisty",
+        "background": "#0D0D12",
+        "foreground": "#FFFFFF",
+        "accent": "#8B5CF6",
+        "accent_secondary": "#6366F1",
+        "muted": "#1A1A24",
+        "muted_fg": "#6B6B7B",
+        "border": "#2A2A38",
+        "card": "#1A1A24",
+        "button_bg": "#8B5CF6",
+        "button_fg": "#FFFFFF",
+        "input_bg": "#1A1A24",
+        "success": "#22C55E",
+        "error": "#EF4444",
+        "is_dark": True,
+    },
+    "Enterprise (Light)": {
+        "name": "Enterprise",
+        "background": "#F8FAFC",
+        "foreground": "#0F172A",
+        "accent": "#4F46E5",
+        "accent_secondary": "#7C3AED",
+        "muted": "#F1F5F9",
+        "muted_fg": "#64748B",
+        "border": "#E2E8F0",
+        "card": "#FFFFFF",
+        "button_bg": "#4F46E5",
+        "button_fg": "#FFFFFF",
+        "input_bg": "#FFFFFF",
+        "success": "#10B981",
+        "error": "#EF4444",
+        "is_dark": False,
+    },
+    "Cyberpunk (Dark)": {
+        "name": "Cyberpunk",
+        "background": "#0a0a0f",
+        "foreground": "#e0e0e0",
+        "accent": "#00ff88",
+        "accent_secondary": "#ff00ff",
+        "muted": "#1c1c2e",
+        "muted_fg": "#6b7280",
+        "border": "#2a2a3a",
+        "card": "#12121a",
+        "button_bg": "#00ff88",
+        "button_fg": "#0a0a0f",
+        "input_bg": "#12121a",
+        "success": "#00ff88",
+        "error": "#ff3366",
+        "is_dark": True,
+    },
+    "Kinetic (Dark)": {
+        "name": "Kinetic",
+        "background": "#09090B",
+        "foreground": "#FAFAFA",
+        "accent": "#DFE104",
+        "accent_secondary": "#A1A1AA",
+        "muted": "#27272A",
+        "muted_fg": "#A1A1AA",
+        "border": "#3F3F46",
+        "card": "#18181B",
+        "button_bg": "#DFE104",
+        "button_fg": "#09090B",
+        "input_bg": "#27272A",
+        "success": "#22C55E",
+        "error": "#EF4444",
+        "is_dark": True,
+    },
+    "Bauhaus (Light)": {
+        "name": "Bauhaus",
+        "background": "#F0F0F0",
+        "foreground": "#121212",
+        "accent": "#D02020",
+        "accent_secondary": "#1040C0",
+        "muted": "#E0E0E0",
+        "muted_fg": "#666666",
+        "border": "#121212",
+        "card": "#FFFFFF",
+        "button_bg": "#D02020",
+        "button_fg": "#FFFFFF",
+        "input_bg": "#FFFFFF",
+        "success": "#22C55E",
+        "error": "#D02020",
+        "is_dark": False,
+    },
+    "Academia (Dark)": {
+        "name": "Academia",
+        "background": "#1C1714",
+        "foreground": "#E8DFD4",
+        "accent": "#C9A962",
+        "accent_secondary": "#8B2635",
+        "muted": "#251E19",
+        "muted_fg": "#9C8B7A",
+        "border": "#4A3F35",
+        "card": "#251E19",
+        "button_bg": "#C9A962",
+        "button_fg": "#1C1714",
+        "input_bg": "#251E19",
+        "success": "#22C55E",
+        "error": "#8B2635",
+        "is_dark": True,
+    },
+    "Sketch (Light)": {
+        "name": "Sketch",
+        "background": "#fdfbf7",
+        "foreground": "#2d2d2d",
+        "accent": "#ff4d4d",
+        "accent_secondary": "#2d5da1",
+        "muted": "#e5e0d8",
+        "muted_fg": "#7a7a7a",
+        "border": "#2d2d2d",
+        "card": "#ffffff",
+        "button_bg": "#ff4d4d",
+        "button_fg": "#ffffff",
+        "input_bg": "#ffffff",
+        "success": "#22C55E",
+        "error": "#ff4d4d",
+        "is_dark": False,
+    },
+    "Playful Geometric (Light)": {
+        "name": "Playful Geometric",
+        "background": "#FFFDF5",
+        "foreground": "#1E293B",
+        "accent": "#8B5CF6",
+        "accent_secondary": "#F472B6",
+        "muted": "#F1F5F9",
+        "muted_fg": "#64748B",
+        "border": "#1E293B",
+        "card": "#FFFFFF",
+        "button_bg": "#8B5CF6",
+        "button_fg": "#FFFFFF",
+        "input_bg": "#FFFFFF",
+        "success": "#34D399",
+        "error": "#EF4444",
+        "is_dark": False,
+    },
+}
+
+# Optional: Path to external GUI Design Center Library for additional customization
+# Set to None to use only embedded themes
+STYLES_BASE_PATH = None  # or Path(r"path/to/GUI_Design_Center_Library/styles")
 
 STYLE_MAP = {
     "Twisty (Dark)": "twisty/tokens.json",
@@ -45,18 +185,24 @@ STYLE_MAP = {
 # STYLE LOADER CLASS
 # ============================================================================
 class StyleLoader:
-    """Loads and normalizes style tokens from JSON files."""
+    """Loads and normalizes style tokens from JSON files or embedded themes."""
 
-    def __init__(self, styles_base_path: Path):
+    def __init__(self, styles_base_path: Optional[Path]):
         self.base_path = styles_base_path
         self.cache: Dict[str, Dict[str, Any]] = {}
 
     def load_style(self, style_key: str) -> Optional[Dict[str, Any]]:
-        """Load a style from JSON file, with caching."""
+        """Load a style from embedded themes or JSON file, with caching."""
         if style_key in self.cache:
             return self.cache[style_key]
 
-        if style_key not in STYLE_MAP:
+        # First, try embedded themes (always available)
+        if style_key in EMBEDDED_THEMES:
+            self.cache[style_key] = EMBEDDED_THEMES[style_key]
+            return self.cache[style_key]
+
+        # Fall back to external JSON files if path is configured
+        if self.base_path is None or style_key not in STYLE_MAP:
             return None
 
         token_path = self.base_path / STYLE_MAP[style_key]
