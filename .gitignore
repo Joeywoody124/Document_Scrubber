@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local config and output
+scrub_config.json
+*_scrubbed.txt
+*_scrubbed.md
+*_Scrubbed.txt
+*_Scrubbed.md
+
+# Test files
+test_*.txt
+test_*.md
