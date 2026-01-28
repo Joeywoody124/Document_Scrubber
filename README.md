@@ -12,6 +12,7 @@ A Python utility for removing personal and project-specific data from text docum
 
 ## What It Scrubs
 
+### Standard Patterns
 | Pattern Type | Example | Replacement |
 |-------------|---------|-------------|
 | Email | john@example.com | [EMAIL] |
@@ -21,12 +22,23 @@ A Python utility for removing personal and project-specific data from text docum
 | Address | 123 Main Street | [PROJECT_ADDRESS] |
 | Name with title | Mr. John Smith | [PERSON_NAME] |
 | Name with credential | John Smith, PE | [PERSON_NAME] |
+| Name in parentheses | (Charles R. Hager, PE) | ([PERSON_NAME]) |
 | Company | Acme Engineering LLC | [FIRM_NAME] |
 | Jurisdiction | Town of Springfield | [LOCAL_JURISDICTION] |
 | ZIP Code | 12345 | [ZIP] |
 | SSN | 123-45-6789 | [SSN_REDACTED] |
 | Coordinates | 32.7767, -96.7970 | [COORDINATES] |
 | Parcel ID | R123-45-67-890 | [PARCEL_ID] |
+
+### Line-Based Field Patterns
+| Field Label | Example | Replacement |
+|-------------|---------|-------------|
+| Project Name | Project Name: Oak Hills Development | Project Name: Current_Project |
+| Project Location | Site Location: 123 Main St, Anytown | Site Location: TBD |
+| Developer | Developer: ABC Development Corp | Developer: [DEVELOPER] |
+| Owner | Owner: Smith Family Trust | Owner: [DEVELOPER] |
+| Applicant | Applicant: XYZ Holdings LLC | Applicant: [DEVELOPER] |
+| Engineer of Record | Engineer of Record: Acme Inc. (John Smith, PE) | Engineer of Record: [FIRM_NAME] |
 
 ## Requirements
 
@@ -77,6 +89,28 @@ python scrub_document.py document.txt --config my_config.json
 # Create sample config file
 python scrub_document.py --create-config
 ```
+
+### Batch Mode (Multiple Files)
+
+```bash
+# Process all .txt and .md files in a folder
+python scrub_batch.py "E:\Documents\Reports"
+
+# Specify custom output folder
+python scrub_batch.py "E:\Documents\Reports" --output "E:\Scrubbed"
+
+# Use custom config for project-specific terms
+python scrub_batch.py "E:\Documents\Reports" --config my_config.json
+
+# Process additional file types
+python scrub_batch.py "E:\Documents\Reports" --extensions .txt .md .log
+```
+
+**Batch Output:**
+- Creates `_Scrubbed` subfolder (or specified output folder)
+- Scrubbed files with `_Scrubbed` suffix
+- `SCRUB_REPORT.txt` - Detailed summary with all detected items
+- `SCRUB_REPORT.csv` - Spreadsheet-compatible report for analysis
 
 ## Custom Configuration
 
@@ -164,7 +198,8 @@ py -3.13 scrub_document.py document.txt
 
 | File | Purpose |
 |------|---------|
-| `scrub_document.py` | Command-line scrubbing tool |
+| `scrub_document.py` | Command-line scrubbing tool (single file) |
+| `scrub_batch.py` | Batch processing for entire folders |
 | `scrub_gui.py` | Multi-themed GUI application |
 | `README.md` | This documentation |
 | `LICENSE` | MIT License |
@@ -172,6 +207,60 @@ py -3.13 scrub_document.py document.txt
 ## License
 
 MIT License - see [LICENSE](LICENSE) file.
+
+## Related Tools
+
+### Safe_Scrub v2.0.5 - AI Security Scanner
+
+Located in `Safe_Scrub/v2/`, this companion tool scans documents for **prompt injection attacks** before AI processing. Designed for civil engineering workflows where PDF-converted documents may contain hidden malicious instructions.
+
+#### Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **35+ Detection Patterns** | CRITICAL, HIGH, MEDIUM, LOW threat classification |
+| **Civil Engineering Whitelist** | Preserves legitimate terms like "bypass channel", "50 cfs", "manual override valve" |
+| **Auto-Sanitization** | Generates `_ScrubSafe` files with threats redacted |
+| **Audit Logging** | CSV and JSON reports for IT security compliance |
+| **Dual Interface** | Standalone GUI (tkinter) + QGIS Python Console |
+
+#### Threat Categories Detected
+
+| Level | Examples |
+|-------|----------|
+| **CRITICAL** | "Ignore all previous instructions", "reveal your system prompt", "developer mode" |
+| **HIGH** | `[SYSTEM: ...]` fake headers, `### END SYSTEM PROMPT` delimiters, role manipulation |
+| **MEDIUM** | Base64 strings, hex encoding, `![](https://...)` tracking pixels, data URIs |
+| **LOW** | Role-play requests, simulation language |
+
+#### Quick Start
+
+**Standalone GUI:**
+```bash
+cd Safe_Scrub/v2
+python Safe_Scrub_v2_Standalone.py
+```
+
+**QGIS Python Console:**
+```python
+from pathlib import Path
+exec(compile(Path('E:/path/to/Safe_Scrub_v2_QGIS.py').read_text(), 'script', 'exec'))
+```
+
+See [`Safe_Scrub/v2/README_SafeScrub.md`](Safe_Scrub/v2/README_SafeScrub.md) for full documentation.
+
+#### Recommended Workflow
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  Raw Document   │───▶│Document_Scrubber│───▶│   Safe_Scrub    │───▶ AI Processing
+│   (with PII)    │    │  (remove PII)   │    │(verify AI-safe) │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
+
+1. **Document_Scrubber** - Remove personally identifiable information
+2. **Safe_Scrub** - Scan for prompt injection attacks, verify Score: A
+3. **AI Tools** - Process sanitized documents safely
 
 ## Author
 
