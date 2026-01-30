@@ -1,267 +1,163 @@
-# Document Scrubber
+# Document Scrubber - Master Rules System
 
-A Python utility for removing personal and project-specific data from text documents before sharing or publishing. Features both a command-line interface and a multi-themed graphical interface.
+A document redaction tool that automatically detects and removes sensitive information from text documents. Uses a **living master list** that learns from each review session.
 
 ## Features
 
-- **Automatic PII Detection**: Identifies and replaces sensitive information using regex patterns
-- **Multi-Themed GUI**: 8 visual themes (Twisty, Enterprise, Cyberpunk, Kinetic, Bauhaus, Academia, Sketch, Playful Geometric)
-- **Command Line Interface**: Full-featured CLI with interactive mode
-- **Custom Configuration**: JSON config files for project-specific scrubbing rules
-- **No External Dependencies**: Uses only Python standard library
+- **Pattern-based detection**: Emails, phones, addresses, names, survey/deed references, companies, permits, and more
+- **Living Master List**: Previously reviewed items are auto-applied in future scans
+- **Only Review NEW Items**: No need to re-review the same items repeatedly
+- **CSV Editing**: Export rules to Excel/CSV for bulk editing
+- **Category Toggles**: Enable/disable entire detection types
+- **Multiple Encodings**: Handles UTF-8, Windows-1252, and Latin-1 files
 
-## What It Scrubs
-
-### Standard Patterns
-| Pattern Type | Example | Replacement |
-|-------------|---------|-------------|
-| Email | john@example.com | [EMAIL] |
-| Phone | (555) 123-4567 | [PHONE] |
-| PE License | PE #12345 | [PE_NUMBER] |
-| Permit ID | SWP-24-01-0001 | [PERMIT_ID] |
-| Address | 123 Main Street | [PROJECT_ADDRESS] |
-| Name with title | Mr. John Smith | [PERSON_NAME] |
-| Name with credential | John Smith, PE | [PERSON_NAME] |
-| Name in parentheses | (Charles R. Hager, PE) | ([PERSON_NAME]) |
-| Company | Acme Engineering LLC | [FIRM_NAME] |
-| Jurisdiction | Town of Springfield | [LOCAL_JURISDICTION] |
-| ZIP Code | 12345 | [ZIP] |
-| SSN | 123-45-6789 | [SSN_REDACTED] |
-| Coordinates | 32.7767, -96.7970 | [COORDINATES] |
-| Parcel ID | R123-45-67-890 | [PARCEL_ID] |
-
-### Line-Based Field Patterns
-| Field Label | Example | Replacement |
-|-------------|---------|-------------|
-| Project Name | Project Name: Oak Hills Development | Project Name: Current_Project |
-| Project Location | Site Location: 123 Main St, Anytown | Site Location: TBD |
-| Developer | Developer: ABC Development Corp | Developer: [DEVELOPER] |
-| Owner | Owner: Smith Family Trust | Owner: [DEVELOPER] |
-| Applicant | Applicant: XYZ Holdings LLC | Applicant: [DEVELOPER] |
-| Engineer of Record | Engineer of Record: Acme Inc. (John Smith, PE) | Engineer of Record: [FIRM_NAME] |
-
-## Requirements
-
-- Python 3.7 or higher
-- No external dependencies (uses standard library only)
-- For GUI: Requires tkinter (included with most Python installations)
-- For GUI themes: Access to [GUI Design Center Library](https://github.com/Joeywoody124/GUI_Design_Center_Library) styles folder
-
-## Installation
-
-```bash
-git clone https://github.com/Joeywoody124/Document_Scrubber.git
-cd Document_Scrubber
-```
+---
 
 ## Quick Start
 
-### GUI Mode (Recommended)
+### QGIS GUI (Recommended)
+
+1. Open QGIS Python Console: `Ctrl+Alt+P`
+2. Click **Show Editor**
+3. Load: `qgis_scrub_master.py`
+4. Click **Run**
+
+### Command Line
 
 ```bash
-python scrub_gui.py
+# Scan a document
+python scrub_master.py document.txt
+
+# Review the generated CSV, then apply
+python scrub_master.py document.txt --apply document_REVIEW.csv
+
+# Export your rules to CSV for editing
+python scrub_master.py --export-rules
+
+# View statistics
+python scrub_master.py --stats
 ```
 
-Features:
-- 8 visual themes with runtime switching
-- File browser dialogs starting in current directory
-- Auto-generates output filename with "_Scrubbed" suffix
-- Real-time results display
+---
 
-### Command Line Mode
+## How It Works
 
-```bash
-# Interactive mode (prompted for file path)
-python scrub_document.py
+```
+First Run:
+  Scan doc → Find 50 items → Review ALL 50 → Save to master_rules.json
 
-# Direct file processing
-python scrub_document.py document.txt
+Second Run:
+  Scan doc → Find 60 items → 45 known (auto-applied) → Review 15 NEW → Save
 
-# Specify output file
-python scrub_document.py document.txt --output scrubbed.txt
-
-# Interactive confirmation of each replacement
-python scrub_document.py document.txt --interactive
-
-# Use custom configuration
-python scrub_document.py document.txt --config my_config.json
-
-# Create sample config file
-python scrub_document.py --create-config
+Third Run:
+  Scan doc → 55 items → 54 known → Review 1 NEW → Save
 ```
 
-### Batch Mode (Multiple Files)
+Your decisions accumulate over time. Eventually, most scans require zero manual review.
 
-```bash
-# Process all .txt and .md files in a folder
-python scrub_batch.py "E:\Documents\Reports"
+---
 
-# Specify custom output folder
-python scrub_batch.py "E:\Documents\Reports" --output "E:\Scrubbed"
+## Detection Categories
 
-# Use custom config for project-specific terms
-python scrub_batch.py "E:\Documents\Reports" --config my_config.json
+| Category | Example | Alias |
+|----------|---------|-------|
+| EMAIL | john@example.com | [EMAIL] |
+| PHONE | (843) 555-1234 | [PHONE] |
+| ADDRESS_STREET | 123 Main Street | [ADDRESS] |
+| ADDRESS_HIGHWAY | 1003 Highway 52 | [ADDRESS] |
+| ADDRESS_POBOX | P.O. Box 6122 | [PO_BOX] |
+| ADDRESS_CITY_STATE_ZIP | Anytown, SC 29401 | [CITY_STATE_ZIP] |
+| NAME_TITLED | Mr. John Smith | [PERSON_NAME] |
+| NAME_CREDENTIALED | John Smith, PE | [PERSON_NAME] |
+| NAME_MIDDLE_INITIAL | John A. Smith | [PERSON_NAME] |
+| NAME_CONTACT_PERSON | Contact Person: John Anderson | [CONTACT_NAME] |
+| SURVEY_NF_OWNER | N/F JANE DOE | [ADJACENT_OWNER] |
+| SURVEY_PROPERTY_OF | PROPERTY OF SMITH JOHN L | [PROPERTY_OWNER] |
+| SURVEY_DEED_BOOK | DEED BOOK 4182, PAGE 245 | [DEED_REF] |
+| SURVEY_PLAT_CAB | PLAT CAB Q, PAGE 275G | [PLAT_REF] |
+| SURVEY_PARCEL_NUM | PARCEL: 1234567890 | [PARCEL_ID] |
+| SURVEY_SUBDIVISION | ~OAK GROVE S/D~ | [SUBDIVISION] |
+| COMPANY_SURVEYING | ABC Surveying, Inc. | [COMPANY] |
+| COMPANY_PLANNING | XYZ Planning & Landscape Architecture | [COMPANY] |
+| PE_LICENSE | PE# 12345 | [PE_NUMBER] |
+| PLS_LICENSE | SC P.L.S. 12345 | [PLS_NUMBER] |
+| PERMIT_ID | CAA-12-34-5678 | [PERMIT_ID] |
 
-# Process additional file types
-python scrub_batch.py "E:\Documents\Reports" --extensions .txt .md .log
-```
-
-**Batch Output:**
-- Creates `_Scrubbed` subfolder (or specified output folder)
-- Scrubbed files with `_Scrubbed` suffix
-- `SCRUB_REPORT.txt` - Detailed summary with all detected items
-- `SCRUB_REPORT.csv` - Spreadsheet-compatible report for analysis
-
-## Custom Configuration
-
-Create a JSON config file for project-specific replacements:
-
-```json
-{
-  "description": "Project-specific scrubbing rules",
-  "patterns": {
-    "Specific School Name": "[PROJECT_NAME]",
-    "Local River Name": "[RECEIVING_WATER]"
-  },
-  "replacements": {
-    "John Smith": "[ENGINEER_OF_RECORD]",
-    "Acme Engineering": "[FIRM_NAME]",
-    "123 Project Drive": "[PROJECT_ADDRESS]"
-  }
-}
-```
-
-## GUI Themes
-
-| Theme | Mode | Style |
-|-------|------|-------|
-| Twisty | Dark | Fintech SaaS, violet-indigo gradients |
-| Enterprise | Light | Professional, indigo-violet, elevated cards |
-| Cyberpunk | Dark | Neon Matrix green, glitch aesthetic |
-| Kinetic | Dark | High-energy brutalism, acid yellow |
-| Bauhaus | Light | Geometric, primary colors |
-| Academia | Dark | Scholarly, brass and crimson |
-| Sketch | Light | Hand-drawn, playful, organic |
-| Playful Geometric | Light | Memphis, bouncy, colorful |
-
-## Configuration for GUI Themes
-
-The GUI loads themes from the GUI Design Center Library. Update the `STYLES_BASE_PATH` in `scrub_gui.py` to match your installation:
-
-```python
-STYLES_BASE_PATH = Path(r"path/to/GUI_Design_Center_Library/styles")
-```
-
-## Supported File Types
-
-- `.txt` - Plain text files
-- `.md` - Markdown files
-
-## Best Practices
-
-1. **Always review output manually** - Automated detection is not perfect
-2. **Run in interactive mode first** - Learn what the tool detects
-3. **Create project-specific configs** - For consistent scrubbing across documents
-4. **Keep original files** - Never overwrite source documents
-5. **Check for context clues** - Names in tables or lists may need manual review
-
-## Limitations
-
-- Cannot detect names without context clues (titles, credentials)
-- May miss project-specific terms not in common patterns
-- Does not process images or embedded objects
-- PDF files must be converted to text first
-
-## Troubleshooting
-
-### Windows: Python path errors with QGIS
-
-If you have QGIS installed and get errors like `Could not find platform independent libraries`, your system `python` command may point to the QGIS-bundled Python.
-
-**Solution**: Use full path to standalone Python:
-```cmd
-"C:\Users\YourName\AppData\Local\Programs\Python\Python313\python.exe" scrub_document.py document.txt
-```
-
-Or use py launcher:
-```cmd
-py -3.13 scrub_document.py document.txt
-```
-
-### GUI styles not loading
-
-1. Verify the GUI Design Center Library exists at the configured path
-2. Edit `STYLES_BASE_PATH` in `scrub_gui.py` to match your installation
-3. Ensure all 8 style folders exist with `tokens.json` files
+---
 
 ## Files
 
-| File | Purpose |
-|------|---------|
-| `scrub_document.py` | Command-line scrubbing tool (single file) |
-| `scrub_batch.py` | Batch processing for entire folders |
-| `scrub_gui.py` | Multi-themed GUI application |
-| `README.md` | This documentation |
-| `LICENSE` | MIT License |
+| File | Purpose | In Git? |
+|------|---------|---------|
+| `qgis_scrub_master.py` | **MAIN** - QGIS GUI tool | ✅ |
+| `scrub_master.py` | Command line tool | ✅ |
+| `master_rules.json` | Your personal redaction rules | ❌ |
+| `master_rules.csv` | Editable CSV (merged on run) | ❌ |
+| `master_rules.template.json` | Template for new users | ✅ |
+| `Handoff.md` | Developer documentation | ✅ |
+| `README.md` | This file | ✅ |
 
-## License
+---
 
-MIT License - see [LICENSE](LICENSE) file.
+## CSV Editing
 
-## Related Tools
+Export your rules to CSV for bulk editing in Excel:
 
-### Safe_Scrub v2.0.5 - AI Security Scanner
-
-Located in `Safe_Scrub/v2/`, this companion tool scans documents for **prompt injection attacks** before AI processing. Designed for civil engineering workflows where PDF-converted documents may contain hidden malicious instructions.
-
-#### Key Features
-
-| Feature | Description |
-|---------|-------------|
-| **35+ Detection Patterns** | CRITICAL, HIGH, MEDIUM, LOW threat classification |
-| **Civil Engineering Whitelist** | Preserves legitimate terms like "bypass channel", "50 cfs", "manual override valve" |
-| **Auto-Sanitization** | Generates `_ScrubSafe` files with threats redacted |
-| **Audit Logging** | CSV and JSON reports for IT security compliance |
-| **Dual Interface** | Standalone GUI (tkinter) + QGIS Python Console |
-
-#### Threat Categories Detected
-
-| Level | Examples |
-|-------|----------|
-| **CRITICAL** | "Ignore all previous instructions", "reveal your system prompt", "developer mode" |
-| **HIGH** | `[SYSTEM: ...]` fake headers, `### END SYSTEM PROMPT` delimiters, role manipulation |
-| **MEDIUM** | Base64 strings, hex encoding, `![](https://...)` tracking pixels, data URIs |
-| **LOW** | Role-play requests, simulation language |
-
-#### Quick Start
-
-**Standalone GUI:**
-```bash
-cd Safe_Scrub/v2
-python Safe_Scrub_v2_Standalone.py
+```csv
+Action,Text,Alias,Category,Notes
+REDACT,John Smith,[PERSON_NAME],CUSTOM,Engineer
+SKIP,County Engineering Dept,,CUSTOM,Keep this
+DELETE,Old Entry,,CUSTOM,Remove from rules
 ```
 
-**QGIS Python Console:**
-```python
-from pathlib import Path
-exec(compile(Path('E:/path/to/Safe_Scrub_v2_QGIS.py').read_text(), 'script', 'exec'))
+**Actions:**
+- `REDACT` - Always replace this text
+- `SKIP` - Never redact this text  
+- `DELETE` - Remove from master rules
+
+Save the CSV and changes merge automatically on next run.
+
+---
+
+## Adding Custom Items
+
+For text the patterns don't catch (like plain names without titles/credentials):
+
+**Option 1: GUI**
+- Use "Add Custom Item" section at bottom of Scan & Review tab
+
+**Option 2: CSV**
+- Edit `master_rules.csv` and add rows with Action=REDACT
+
+---
+
+## Git Setup for Teams
+
+The `.gitignore` excludes personal rules:
+
+```
+master_rules.json
+master_rules.csv
+*_Scrubbed.txt
+*_REVIEW.csv
 ```
 
-See [`Safe_Scrub/v2/README_SafeScrub.md`](Safe_Scrub/v2/README_SafeScrub.md) for full documentation.
+Each team member builds their own master list. Only the template is shared.
 
-#### Recommended Workflow
+---
 
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│  Raw Document   │───▶│Document_Scrubber│───▶│   Safe_Scrub    │───▶ AI Processing
-│   (with PII)    │    │  (remove PII)   │    │(verify AI-safe) │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-```
+## Troubleshooting
 
-1. **Document_Scrubber** - Remove personally identifiable information
-2. **Safe_Scrub** - Scan for prompt injection attacks, verify Score: A
-3. **AI Tools** - Process sanitized documents safely
+**"Could not read file" error**  
+The file has special characters. Fixed in latest version - tries multiple encodings.
 
-## Author
+**Rules not saving**  
+Check the hardcoded path in the script matches your folder location.
 
-Created with [Claude Code](https://claude.com/claude-code)
+**Pattern not detecting something**  
+1. Check Settings tab - is the category enabled?
+2. Add as custom item if it's an edge case
+
+---
+
+**Author:** Joey M. Woody P.E.

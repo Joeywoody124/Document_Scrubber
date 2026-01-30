@@ -1,0 +1,150 @@
+{
+  "version": "1.0",
+  "description": "Master redaction rules - DO NOT COMMIT TO GIT (contains sensitive patterns)",
+  "categories": {
+    "EMAIL": {
+      "enabled": true,
+      "default_alias": "[EMAIL]",
+      "description": "Email addresses"
+    },
+    "PHONE": {
+      "enabled": true,
+      "default_alias": "[PHONE]",
+      "description": "Phone numbers"
+    },
+    "ADDRESS_STREET": {
+      "enabled": true,
+      "default_alias": "[ADDRESS]",
+      "description": "Street addresses"
+    },
+    "ADDRESS_HIGHWAY": {
+      "enabled": true,
+      "default_alias": "[ADDRESS]",
+      "description": "Highway addresses"
+    },
+    "ADDRESS_POBOX": {
+      "enabled": true,
+      "default_alias": "[PO_BOX]",
+      "description": "PO Box addresses"
+    },
+    "ADDRESS_CITY_STATE_ZIP": {
+      "enabled": true,
+      "default_alias": "[CITY_STATE_ZIP]",
+      "description": "City, State ZIP"
+    },
+    "NAME_TITLED": {
+      "enabled": true,
+      "default_alias": "[PERSON_NAME]",
+      "description": "Names with titles (Mr./Mrs./Dr.)"
+    },
+    "NAME_CREDENTIALED": {
+      "enabled": true,
+      "default_alias": "[PERSON_NAME]",
+      "description": "Names with credentials (PE, PLS, etc.)"
+    },
+    "NAME_MIDDLE_INITIAL": {
+      "enabled": true,
+      "default_alias": "[PERSON_NAME]",
+      "description": "Names with middle initial"
+    },
+    "NAME_ALLCAPS_CREDENTIAL": {
+      "enabled": true,
+      "default_alias": "[PERSON_NAME]",
+      "description": "ALL CAPS names with credentials"
+    },
+    "NAME_CONTACT_PERSON": {
+      "enabled": true,
+      "default_alias": "[CONTACT_NAME]",
+      "description": "Contact Person field"
+    },
+    "SURVEY_NF_OWNER": {
+      "enabled": true,
+      "default_alias": "[ADJACENT_OWNER]",
+      "description": "N/F (Now or Formerly) owner names"
+    },
+    "SURVEY_PROPERTY_OF": {
+      "enabled": true,
+      "default_alias": "[PROPERTY_OWNER]",
+      "description": "Property Of owner names"
+    },
+    "SURVEY_DEED_BOOK": {
+      "enabled": true,
+      "default_alias": "[DEED_REF]",
+      "description": "Deed Book references"
+    },
+    "SURVEY_PLAT_CAB": {
+      "enabled": true,
+      "default_alias": "[PLAT_REF]",
+      "description": "Plat Cabinet/Book references"
+    },
+    "SURVEY_TMS": {
+      "enabled": true,
+      "default_alias": "[TMS_REF]",
+      "description": "TMS (Tax Map) references"
+    },
+    "SURVEY_PARCEL_NUM": {
+      "enabled": true,
+      "default_alias": "[PARCEL_ID]",
+      "description": "Parcel number (long format)"
+    },
+    "SURVEY_SUBDIVISION": {
+      "enabled": true,
+      "default_alias": "[SUBDIVISION]",
+      "description": "Subdivision references"
+    },
+    "SURVEY_BLOCK_LOT": {
+      "enabled": true,
+      "default_alias": "[BLOCK_LOT]",
+      "description": "Block/Lot references"
+    },
+    "COMPANY_SURVEYING": {
+      "enabled": true,
+      "default_alias": "[COMPANY]",
+      "description": "Surveying/Engineering companies"
+    },
+    "COMPANY_PLANNING": {
+      "enabled": true,
+      "default_alias": "[COMPANY]",
+      "description": "Planning/Architecture companies"
+    },
+    "PE_LICENSE": {
+      "enabled": true,
+      "default_alias": "[PE_NUMBER]",
+      "description": "PE License numbers"
+    },
+    "PLS_LICENSE": {
+      "enabled": true,
+      "default_alias": "[PLS_NUMBER]",
+      "description": "PLS License numbers"
+    },
+    "PERMIT_ID": {
+      "enabled": true,
+      "default_alias": "[PERMIT_ID]",
+      "description": "Permit/CAA numbers"
+    },
+    "PARCEL_ID": {
+      "enabled": true,
+      "default_alias": "[PARCEL_ID]",
+      "description": "10-digit Parcel IDs"
+    },
+    "PARCEL_ID_DASHED": {
+      "enabled": true,
+      "default_alias": "[PARCEL_ID]",
+      "description": "Dashed Parcel/Tax IDs"
+    },
+    "SSN": {
+      "enabled": true,
+      "default_alias": "[SSN_REDACTED]",
+      "description": "Social Security Numbers"
+    },
+    "COORDINATES": {
+      "enabled": true,
+      "default_alias": "[COORDINATES]",
+      "description": "GPS coordinates"
+    }
+  },
+  "always_redact": {
+  },
+  "never_redact": [
+  ]
+}
