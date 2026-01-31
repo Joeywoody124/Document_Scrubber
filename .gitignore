@@ -3,18 +3,23 @@ master_rules.json
 master_rules.csv
 master_rules.json.bak
 
-# Handoff docs (local only)
-Handoff.md
+# Root Handoff docs (local only)
+/Handoff.md
 
 # Output files
 *_Scrubbed.txt
 *_Scrubbed.md
 *_REVIEW.csv
+new_detections.csv
 
 # Python cache
 __pycache__/
 *.pyc
 *.pyo
 
-# Test files
-test_*.txt
+# Test output files (but keep test source files)
+batch_branch/test_files/*_Scrubbed*
+batch_branch/test_files/new_detections.csv
+
+# Git commit script (temporary)
+batch_branch/git_commit.bat

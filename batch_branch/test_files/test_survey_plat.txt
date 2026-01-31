@@ -1,0 +1,99 @@
+BOUNDARY SURVEY PLAT
+LEGAL DESCRIPTION AND ADJOINER INFORMATION
+
+================================================================================
+PROPERTY IDENTIFICATION
+================================================================================
+
+Owner: HAMPTON DEVELOPMENT GROUP LLC
+Property Of HAMPTON DEVELOPMENT GROUP LLC
+TMS# 287-15-03-044
+Parcel Number: 2871503044
+Tax ID: 287-15-03-044
+
+Subdivision: OAKWOOD ESTATES
+Block 8, Lot 22
+Plat Cabinet A, Page 789
+Deed Book 2156, Page 334
+
+================================================================================
+ADJOINING PROPERTY OWNERS
+================================================================================
+
+NORTH BOUNDARY:
+N/F RICHARDSON FAMILY LIMITED PARTNERSHIP
+TMS: 287-15-03-043
+Deed Book 1892, Page 112
+Plat Book 15, Slide 88
+
+SOUTH BOUNDARY:
+N/F COASTAL CAROLINA INVESTMENTS LLC
+TMS: 287-15-03-045
+Deed Book 2045, Page 556
+
+EAST BOUNDARY:
+N/F ROBERT L. & SUSAN M. PATTERSON
+TMS: 287-15-03-052
+Plat Cabinet B, Page 234
+
+WEST BOUNDARY:
+N/F MAGNOLIA GROVE HOMEOWNERS ASSOC
+Property Of MAGNOLIA GROVE HOMEOWNERS ASSOC
+TMS: 287-15-03-033
+Deed Book 1756, Page 891
+
+================================================================================
+ADDITIONAL ADJOINERS (CORNER PARCELS)
+================================================================================
+
+NORTHEAST CORNER:
+N/F DAVID ALLEN FOSTER
+Parcel No. 2871503051
+
+NORTHWEST CORNER:
+N/F MARGARET E. THORNTON TRUST
+Deed Book 1623, Page 445
+
+SOUTHEAST CORNER:
+N/F PINEWOOD COMMERCIAL PARTNERS
+TMS# 287-15-03-053
+
+SOUTHWEST CORNER:
+N/F CHARLES W. BLACKWELL III
+Property Of BLACKWELL FAMILY TRUST
+Plat Cabinet C, Page 112
+
+================================================================================
+EASEMENTS AND RIGHT-OF-WAY
+================================================================================
+
+20' Utility Easement: SCE&G per Deed Book 1245, Page 678
+15' Drainage Easement: County of Beaufort per Plat Book 8, Slide 34
+Variable Width R/W: SCDOT per Deed Book 2001, Page 123
+
+================================================================================
+SURVEYOR CERTIFICATION
+================================================================================
+
+Surveyed by: Lowcountry Land Surveyors LLC
+123 Survey Lane
+Beaufort, SC 29902
+Phone: (843) 555-2468
+Email: info@lowcountrysurvey.com
+
+Field Surveyor: Christopher M. Hayes, PLS
+PLS License: PLS #6234
+
+Office Review: Amanda R. Collins, PLS
+PLS #5891
+
+Project Coordinates:
+Beginning Point: 32.4521, -80.7234
+Ending Point: 32.4518, -80.7229
+
+I hereby certify this plat represents a survey made under my supervision.
+
+_______________________________
+Christopher M. Hayes, PLS
+SC Registration: PLS #6234
+Date: January 20, 2025

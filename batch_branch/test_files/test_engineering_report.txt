@@ -1,0 +1,118 @@
+STORMWATER MANAGEMENT REPORT
+Project: Riverside Commercial Development
+Prepared for: County Planning Department
+
+================================================================================
+PROJECT TEAM
+================================================================================
+
+Engineer of Record: Michael R. Thompson, P.E.
+Project Manager: Sarah L. Williams, P.E., CFM
+Survey Director: James K. Anderson, PLS
+Landscape Architect: Emily Chen, RLA, ASLA
+
+Contact Person: Robert Martinez
+Email: rmartinez@acmeengineering.com
+Phone: (843) 555-1234
+
+Alternate Contact: Jennifer Walsh
+Email: jwalsh@acmeengineering.com
+Phone: 843-555-5678
+
+================================================================================
+PROJECT LOCATION
+================================================================================
+
+Site Address: 4521 Riverside Drive
+City: Charleston, SC 29412
+
+Mailing Address:
+Acme Engineering Associates
+1200 Commerce Boulevard
+Suite 400
+North Charleston, SC 29405
+
+PO Box 8832
+Charleston, SC 29401
+
+================================================================================
+PARCEL INFORMATION
+================================================================================
+
+Tax Map Number: TMS# 455-12-00-089
+Parcel ID: 4551200089
+Alternative Format: 455-12-00-089
+
+Adjacent Property Owners:
+- N/F HENDERSON FAMILY TRUST
+- N/F COASTAL PROPERTIES LLC
+- N/F WILLIAM R. & MARTHA SIMMONS
+- Property Of RIVERFRONT HOLDINGS INC
+
+Deed Reference: Deed Book 4521, Page 892
+Plat Reference: Plat Cabinet D, Page 156
+Subdivision: RIVERSIDE COMMONS Phase 2, Section B
+Block 12, Lot 45A
+
+================================================================================
+PERMIT INFORMATION
+================================================================================
+
+NPDES Permit: SCR10AB45
+MS4 Permit ID: MS4-2024-0892
+CAA Number: CAA2024-00156
+
+PE License: P.E. #28456
+PLS License: PLS #4521
+
+================================================================================
+SURVEY NOTES
+================================================================================
+
+Boundary survey performed by Anderson Land Surveying Inc.
+Field work completed by Thomas J. Burke, PLS
+
+Property corners set per Plat Book 12, Slide 45.
+TMS: 455-12-00-090 (adjacent parcel)
+
+N/F JAMES MORRISON shown on original plat.
+N/F BLACKWOOD ENTERPRISES LLC per Deed Book 3892, Page 445.
+
+================================================================================
+CONTACT DIRECTORY
+================================================================================
+
+County Reviewer: Mr. Frank Davidson
+Email: fdavidson@charlestoncounty.org
+Phone: (843) 555-9012
+
+State DHEC Contact: Dr. Patricia Nguyen
+Email: pnguyen@dhec.sc.gov
+Phone: 803.555.3456
+
+Contractor: Mrs. Linda Foster
+BuildRight Construction LLC
+5890 Industrial Parkway
+Summerville, SC 29483
+Email: lfoster@buildright.com
+Phone: 843.555.7890
+
+================================================================================
+COORDINATES
+================================================================================
+
+Site Centroid: 32.7891, -79.9345
+Northwest Corner: 32.7895, -79.9352
+Southeast Corner: 32.7887, -79.9338
+
+================================================================================
+CERTIFICATION
+================================================================================
+
+I hereby certify that this report was prepared under my direct supervision.
+
+_______________________________
+Michael R. Thompson, P.E.
+SC Registration No. P.E. #28456
+
+Date: January 15, 2025

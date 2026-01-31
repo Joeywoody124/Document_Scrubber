@@ -1,0 +1,123 @@
+EDGE CASE TEST FILE
+For testing pattern detection accuracy
+
+================================================================================
+SOCIAL SECURITY NUMBERS (SHOULD REDACT)
+================================================================================
+
+Applicant SSN: 123-45-6789
+Owner SSN: 987-65-4321
+Do not confuse with: 123-456-7890 (this is a phone number format)
+
+================================================================================
+PHONE NUMBER VARIATIONS (SHOULD REDACT)
+================================================================================
+
+Standard: (555) 123-4567
+No parens: 555-123-4567
+Dots: 555.123.4567
+Spaces: 555 123 4567
+Mixed: (555)123-4567
+
+================================================================================
+EMAIL VARIATIONS (SHOULD REDACT)
+================================================================================
+
+Standard: john.doe@example.com
+Uppercase: JANE.DOE@COMPANY.ORG
+Mixed: Admin@Sub.Domain.Co.UK
+Numbers: user123@test456.net
+Plus sign: user+tag@gmail.com
+
+================================================================================
+COORDINATE FORMATS (SHOULD REDACT)
+================================================================================
+
+Decimal: 32.8765, -79.9432
+High precision: 32.87654321, -79.94321234
+Negative lat: -33.8765, 151.2345
+
+================================================================================
+PARCEL ID FORMATS (SHOULD REDACT)
+================================================================================
+
+10-digit: 1234567890
+Dashed: 123-45-67-890
+TMS format: TMS# 123-45-67-890
+TMS no dash: TMS: 1234567890
+
+================================================================================
+NAME EDGE CASES
+================================================================================
+
+With title: Mr. John Smith
+With title: Mrs. Jane Doe
+With title: Dr. Robert Johnson
+With title: Prof. Alan Turing
+
+With credential: John Smith, P.E.
+With credential: Jane Doe, PLS
+With credential: Bob Jones, AICP
+With credential: Mary Wilson, RLA, LEED AP
+
+Middle initial: John A. Smith
+Middle initial: Mary B. Jones
+
+ALL CAPS with credential: JOHN SMITH, P.E.
+ALL CAPS with credential: MARY JONES, PLS
+
+================================================================================
+SURVEY REFERENCES (SHOULD REDACT)
+================================================================================
+
+N/F PREVIOUS OWNER NAME
+N/F TRUST OF JOHN SMITH
+Property Of CURRENT OWNER LLC
+Property Of THE ESTATE OF JANE DOE
+
+Deed Book 123, Page 456
+Deed Book A123, Page 789
+Plat Cabinet A, Page 100
+Plat Book 12, Slide 34
+
+================================================================================
+FALSE POSITIVE TESTS (SHOULD NOT REDACT OR HANDLE CAREFULLY)
+================================================================================
+
+These should NOT be detected as sensitive:
+- Reference to Section 404 permit (not a phone)
+- Project phase 2.1 (not coordinates)
+- Scale 1:100 (not a ratio of concern)
+- 10-foot setback (not a parcel ID)
+- The year 2025 (not part of SSN)
+
+These dates look like phone numbers but aren't:
+- Meeting on 12/15/2024
+- Deadline: 01-31-2025
+
+These numbers are not parcel IDs:
+- Drawing sheet C-101
+- Specification section 312316
+- ASTM D 1557
+
+Company names that might partially match:
+- Planning Department (not a company to redact)
+- Engineering Division (not a company to redact)
+- County Surveyor's Office (government, not private)
+
+================================================================================
+MIXED CONTENT PARAGRAPH
+================================================================================
+
+On January 15, 2025, Mr. Thomas Anderson, P.E. of Coastal Engineering Inc. 
+submitted a drainage study for the property located at 4521 Oak Street, 
+Charleston, SC 29412 (TMS# 456-12-00-089). The property, formerly owned by 
+N/F BLACKWOOD FAMILY TRUST per Deed Book 2341, Page 567, is now under contract 
+to Riverside Development LLC. Contact Sarah M. Williams at (843) 555-9876 or 
+swilliams@coastaleng.com for additional information. The site coordinates are 
+approximately 32.7891, -79.9345. Survey work was performed by James K. Murphy, 
+PLS (License PLS #4521).
+
+================================================================================
+END OF TEST FILE
+================================================================================
