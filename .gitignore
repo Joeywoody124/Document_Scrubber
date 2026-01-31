@@ -3,6 +3,9 @@ master_rules.json
 master_rules.csv
 master_rules.json.bak
 
+# Handoff docs (local only)
+Handoff.md
+
 # Output files
 *_Scrubbed.txt
 *_Scrubbed.md
